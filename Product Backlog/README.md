@@ -1,4 +1,4 @@
-<h1>BackLog</h1>
+<h1>Requisitos funcionais</h1>
 
 1° Nos caixas para cálculo de valor da compra<br>
 2° Balanças para pesagem e cálculo do preço do produto vendido por peso ou a granel. <br>
