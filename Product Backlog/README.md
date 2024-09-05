@@ -1,1 +1,1 @@
-asasas
+<h3>Caixa - Nos caixas para cálculo de valor da compra e os demais nas estações para pesagem e cálculo do preço do produto vendido por peso ou a granel. O servidor possui pastas compartilhadas com as demais estações, onde cada estação manipula um arquivo com as transações efetuadas na estação.</h3>
