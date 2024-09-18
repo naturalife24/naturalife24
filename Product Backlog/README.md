@@ -20,4 +20,5 @@ Monitor: 20 polegadas, fixo na estrutura do caixa;
 Periféricos: Teclado Rise Mode Office, ABNT2, USB; Mouse Rise Mode Office, USB;
 Sistema Operacional: Windows 10 pro.
 - O progama possui uma otima estabilidade, não demostrando erros continuos, sendo otimizados para os computadores e com constantes manutenções.
-- Progama sendo
+- Treinamento para os usuarios (operadores de caixa) utilizar o progama com exito e maestria, evitando com que o ADM tenha que intervir
+- Com o cadastro de produtos sendo apenas do ADM não ocorre de erros dos IDs dos produtos e com isso os operadores poderão utilizar sem mesmo com grandes demandas.
