@@ -1,5 +1,5 @@
-DAILYS OCORRERÃO NAS DATAS ABAIXO: 
-11-Sep	Levantamento de requisitos
+## DAILYS OCORRERÃO NAS DATAS ABAIXO: 
+- 11-Sep	Levantamento de requisitos
 18-Sep	Planejamento e início SPRINT 1: Criação e diferenciação acesso ADM e CAIXA
 25-Sep	Início da SPRINT 2: Função "CADASTRO DE PRODUTOS" (exibição, alteração, exclusão, inclusão)
 2-Oct	Início da SPRINT 3: Função "VENDA" e "CADASTRO DE CLIENTES"
