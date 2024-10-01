@@ -10,5 +10,3 @@
 1.3.2.	Se senha incorreta no arquivo, não autenticar; -> Camilly
 1.3.3.	Se usuário e senha correspondentes no arquivo, autenticar. -> Camilly
 1.4.	Mostrar menu com opções “Cadastrar usuário”, “Autenticar usuário”, “Limpar menu” e “Sair”. -> Jota
-
-teste
