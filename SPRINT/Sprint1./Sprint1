@@ -131,3 +131,135 @@ void lerUsuarios() // funcao que executa a leitura do banco de dados
      limpar_tela();
      return 0;
 }
+void cadastrarUsuario() // funcao responsavel pelo cadastro de usuarios
+{
+    if (excedido == 1) // se a quantidade maxima de usuarios ja estiver cadastrada
+    {
+        printf("Numero maximo de usuarios excedido\n");
+        return;
+    }
+    limpar_tela();
+    printf("Para cadastrar um novo usuario, por favor, digite a senha do administrador (ADM)");
+    if (fgets(senhaAdmin, MAX_SENHA, stdin) != NULL) // insere senha de adm
+    {
+        senhaAdmin[strcspn(senhaAdmin, "\n")] = '\0';
+        limpar_tela();
+        if (strcmp(senhaAdmin, senhaADM) == 0) // compara senha de adm
+        {
+            estrutura novoUsuario; // nova estrutura para cadastro
+
+            printf("\tDigite o nome de usuario: ");
+            if (fgets(novoUsuario.nome, MAX_NOME, stdin) != NULL) // armazena nome
+            {
+                novoUsuario.nome[strcspn(novoUsuario.nome, "\n")] = '\0';
+                toLowerCase(novoUsuario.nome);
+                remove_espacos(novoUsuario.nome);
+                if (strlen(novoUsuario.nome) >= 4) // verifica tamanho do nome
+                {
+                    int usuarioExiste = 0;
+                    for (int i = 0; i < idUsuario; i++) // verifica se usuario ja existe
+                    {
+                        if (strcmp(user[i].nome, novoUsuario.nome) == 0)
+                        {
+                            usuarioExiste = 1;
+                            break;
+                        }
+                    }
+                    if (usuarioExiste) // usuario existente
+                    {
+                        limpar_tela();
+                        printf("Usuario existente\n");
+                    }
+                    else // cadastro do novo usuario
+                    {
+                        printf("\tDigite a senha: ");
+                        if (fgets(novoUsuario.senha, MAX_SENHA, stdin) != NULL) // valor de senha
+                        {
+                            novoUsuario.senha[strcspn(novoUsuario.senha, "\n")] = '\0';
+                            remove_espacos(novoUsuario.senha);
+                            if (strlen(novoUsuario.senha) >= 4) // verifica tamanho da senha
+                            {
+                                printf("Digite 1 para adm ou 2 para caixa: ");
+                                if (scanf("%d", &position) == 1)
+                                {
+                                    limpabuffer(); // limpar buffer
+
+                                    if (position == 1)
+                                    {
+                                        strcpy(novoUsuario.cargo, adm); // atribui cargo
+                                    }
+                                    else if (position == 2)
+                                    {
+                                        strcpy(novoUsuario.cargo, caixa); // atribui cargo
+                                    }
+                                    else
+                                    {
+                                        printf("Opcao invalida. Usuario nao cadastrado.\n");
+                                        getch();
+                                        limpar_tela();
+                                        return;
+                                    }
+
+                                    user[idUsuario] = novoUsuario; // atribui novos valores
+                                    idUsuario++;
+                                    FILE *escrevearquivo = fopen("idusersenha.txt", "a"); // abre o banco de dados
+                                    if (escrevearquivo == NULL)
+                                    {
+                                        perror("Erro ao abrir arquivo");
+                                        return;
+                                    }
+                                    fprintf(escrevearquivo, "%d|%s|%s|%s\n", idUsuario, user[idUsuario - 1].nome, user[idUsuario - 1].senha, user[idUsuario - 1].cargo); // insere novo usuario
+                                    fclose(escrevearquivo);
+
+                                    printf("Usuario cadastrado com sucesso!\n");
+                                    getch();
+                                    limpar_tela();
+                                    return;
+                                }
+                                else
+                                {
+                                    printf("Opcao invalida\n");
+                                    getch();
+                                    limpar_tela();
+                                    return;
+                                }
+                            }
+                            else
+                            {
+                                printf("Senha deve ter no minimo 4 caracteres\n");
+                                getch();
+                                limpar_tela();
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+                }
+                else
+                {
+                    printf("Nome deve ter no minimo 4 caracteres\n");
+                    getch();
+                    limpar_tela();
+                    return;
+                }
+            }
+            else
+            {
+                printf("Erro ao ler o nome de usuario\n");
+                getch();
+                limpar_tela();
+                return;
+            }
+        }
+        else
+        {
+            printf("Senha incorreta!\n");
+            getch();
+            limpar_tela();
+            return;
+        }
+    }
+}
