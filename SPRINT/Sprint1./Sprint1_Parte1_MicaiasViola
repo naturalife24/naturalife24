@@ -63,3 +63,71 @@ void remove_espacos(char *str) // remove espacos de uma string
     }
     *dest = '\0'; // adiciona o caractere nulo no final da nova string
 }
+void lerUsuarios() // funcao que executa a leitura do banco de dados
+ {
+     FILE *leitura = fopen("idusersenha.txt", "r");
+     if (leitura == NULL)
+     {
+         perror("Erro ao abrir arquivo");
+         return;
+     }
+     idUsuario = 0;
+     while (fgets(user[idUsuario].nome, MAX_NOME, leitura) != NULL) // le uma linha do arquivo por vez
+        {
+             user[idUsuario].nome[strcspn(user[idUsuario].nome, "\n")] = '\0';
+             char *split = strtok(user[idUsuario].nome, "|"); // uso da funcao strtok() para "destrinchar" a linha lida
+                  user[idUsuario]
+                      .id = atoi(split); // funcao atoi() transforma string em inteiro
+         if (split != NULL)  
+         {
+                 split = strtok(NULL, "|"); // agora split recebe o nome lido
+                 strcpy(user[idUsuario].nome, split); // atribui split para o nome do usuario
+             if (split != NULL)
+             {
+                 split = strtok(NULL, "|"); // aqui split ira ignorar o token atual e ler o proximo
+                 strncpy(user[idUsuario].senha, split, MAX_SENHA - 1);
+                 user[idUsuario].senha[MAX_SENHA - 1] = '\0'; // define o ultimo caractere de .senha como nulo
+
+                split = strtok(NULL, "|"); // ultimo token
+                strncpy(user[idUsuario].cargo, split, MAX_SENHA - 1);
+                user[idUsuario].cargo[MAX_SENHA - 1] = '\0';
+                idUsuario++; // atribui a quantidade de usuarios cadastrados
+                if (idUsuario >= MAX_USUARIOS)
+                {
+                    excedido = 1;
+                    break;
+                }
+             }
+          }
+       }
+     fclose(leitura);
+ }
+ int autentica() // funcao que verifica se o nome de usuario ja esta cadastrado
+ {
+     lerUsuarios();
+     char confirmaNome[MAX_NOME]; // variavel de usuario
+     char confirmaSenha[MAX_SENHA]; // variavel para comparacao de senha
+     printf("\tDigite o nome de usuario: ");
+     fgets(confirmaNome, MAX_NOME, stdin);
+     confirmaNome[strcspn(confirmaNome, "\n")] = '\0';
+     remove_espacos(confirmaNome);
+     toLowerCase(confirmaNome);
+     printf("\tDigite a senha: ");
+     fgets(confirmaSenha, MAX_SENHA, stdin);
+     confirmaSenha[strcspn(confirmaSenha, "\n")] = '\0';
+     remove_espacos(confirmaSenha);
+     for (int i = 0; i < idUsuario; i++) // percorre todos os usuarios
+     {
+          if (strcmp(confirmaNome, user[i].nome) == 0) // compara nome com usuario
+          {
+              if (strcmp(confirmaSenha, user[i].senha) == 0) // se a senha estiver correta
+              {
+                  limpar_tela();
+                  idSessao = i; // atribui o ID do usuario logado
+                  return 1;
+              }
+          }
+     }
+     limpar_tela();
+     return 0;
+}
