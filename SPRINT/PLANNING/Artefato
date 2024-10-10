@@ -1,18 +1,27 @@
 1.	Usuários para administrador e caixa: SPRINT 1.
 1.1.	Declarar bibliotecas, constantes e variáveis; -> Micaias
-1.2.	Cadastrar usuários;
+1.2.	Cadastrar usuários:
 1.2.1.	Criar estrutura de varáveis atribuída a um usuário; -> Micaias
 1.2.2.	Adicionar regras para nome de usuário e senha (nº máximo e mínimo de caracteres, uso de maiúsculas e minúsculas, caracteres especiais); -> Guilherme
-1.2.3.	Se nome de usuário já existente no arquivo, cancelar criação. -> Guilherme
+1.2.3.	Se nome de usuário já existente no arquivo, cancelar criação; -> Guilherme
 1.2.4.	Se nome novo, salvar em arquivo. -> Guilherme
-1.3.	Autenticar usuários;
+1.3.	Autenticar usuários:
 1.3.1.	Se usuário não existente no arquivo, não autenticar; -> Camilly
 1.3.2.	Se senha incorreta no arquivo, não autenticar; -> Camilly
 1.3.3.	Se usuário e senha correspondentes no arquivo, autenticar. -> Camilly
 1.4.	Mostrar menu com opções “Cadastrar usuário”, “Autenticar usuário”, “Limpar menu” e “Sair”. -> Jota
 
 2. Catálogo de produtos: SPRINT 2.
-1.1. Declarar estrutura atribuída aos produtos;
-1.2. Cadastrar produtos;
-1.2.1. Adicionar regras para nome dos produtos (ausência de números, nº mínimo de caracteres);
-1.2.2. Se produto já existente no arquivo, cancelar criação. 
+2.1. Declarar estrutura atribuída aos produtos; -> 1
+2.2. Ler arquivo com a base de dados dos produtos; -> 2
+2.3. Mostrar na tela o catálogo completo de produtos já cadastrados; -> 2
+2.4. Cadastrar/alterar produtos: 
+2.4.1. Adicionar regras para nome dos produtos (ausência de números, nº mínimo de caracteres); -> 3
+2.4.2. Se produto já existente no arquivo: 
+2.4.2.1. Opção para cancelar cadastro; -> 3
+2.4.2.2. Opção para alterar o preço existente. -> 3
+2.4.3. Se produto novo, salvar em arquivo.
+2.5. Excluir produto do catálogo; -> 1
+2.6. Diferenciar menus para administrador e caixa:
+2.6.1. Menu do administrador com opções "Cadastrar/Alterar Produtos", "Remover Produto", "Menu de Produtos" e "Sair"; -> 4
+2.6.2. Menu do caixa por enquanto volta para o menu principal. -> 4
