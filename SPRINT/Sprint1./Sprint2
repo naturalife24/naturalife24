@@ -16,6 +16,7 @@ int idSessao = 0;       // variavel para controle de "sessao", identifica o usua
 int position;           // variavel de controle
 int excedido = 0;       // variavel de controle
 int idUsuario = 0;      // inicia com valor 0 antes da leitura dos usuarios ser feita e atribuida ao id
+int idproduto = 0; // #SPRINT 2 contem o id de cada produto cadastrado
 char senhaADM[] = "1234";
 char senhaAdmin[MAX_SENHA];
 char adm[] = "adm";
@@ -27,7 +28,16 @@ typedef struct
     char cargo[MAX_NOME];
     int id;
 } estrutura;
+
 estrutura user[MAX_USUARIOS]; // array com os valores da estrutura
+
+typedef struct //#SPRINT 2
+{ // #SPRINT 2 estrutura de variaveis atribuidas a um produto
+ char nome[MAX_NOME];
+ int id;
+ float preco;
+} structproduto;
+structproduto produto[MAX_PRODUTO];//array com os valores da estrutura
 int limpar_tela()             // funcao para limpar a tela
 {
     system("cls"); // comando do Windows para limpar a tela
