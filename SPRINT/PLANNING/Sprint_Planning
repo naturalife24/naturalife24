@@ -12,16 +12,19 @@
 1.4.	Mostrar menu com opções “Cadastrar usuário”, “Autenticar usuário”, “Limpar menu” e “Sair”. -> Jota
 
 2.   Catálogo de produtos: SPRINT 2.
-2.1.  Declarar estrutura atribuída aos produtos; -> 1
-2.2.  Ler arquivo com a base de dados dos produtos; -> 2
-2.3.  Mostrar na tela o catálogo completo de produtos já cadastrados; -> 2
+2.1.  Declarar estrutura atribuída aos produtos; -> Micaias
+2.2.  Ler arquivo com a base de dados dos produtos; -> Guilherme
+2.3.  Mostrar na tela o catálogo completo de produtos já cadastrados; -> Guilherme
 2.4.  Cadastrar/alterar produtos: 
-2.4.1.  Adicionar regras para nome dos produtos (ausência de números, nº mínimo de caracteres); -> 3
+2.4.1.  Adicionar regras para nome dos produtos (ausência de números, nº mínimo de caracteres); -> Camilly
 2.4.2.  Se produto já existente no arquivo: 
-2.4.2.1.  Opção para cancelar cadastro; -> 3
-2.4.2.2.  Opção para alterar o preço existente. -> 3
+2.4.2.1.  Opção para cancelar cadastro; -> Camilly
+2.4.2.2.  Opção para alterar o preço existente. -> Camilly
 2.4.3.  Se produto novo, salvar em arquivo.
-2.5.  Excluir produto do catálogo; -> 1
+2.5.  Excluir produto do catálogo; -> Micaias
 2.6.  Diferenciar menus para administrador e caixa:
-2.6.1.  Menu do administrador com opções "Cadastrar/Alterar Produtos", "Remover Produto", "Menu de Produtos" e "Sair"; -> 4
-2.6.2.  Menu do caixa por enquanto volta para o menu principal. -> 4
+2.6.1.  Menu do administrador com opções "Cadastrar/Alterar Produtos", "Remover Produto", "Menu de Produtos" e "Sair"; -> Jota
+2.6.2.  Menu do caixa por enquanto volta para o menu principal. -> Jota
+
+3. Vendas e cadastro de clientes: SPRINT 3.
+
