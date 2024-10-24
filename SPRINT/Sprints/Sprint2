@@ -708,4 +708,135 @@ void cadastrarUsuario() // funcao responsavel pelo cadastro de usuarios
     }
     }while (opcao != 3);
     return 0;
- }
+int menuADM()//#SPRINT 2, mostra o menu do administrador 
+{ 
+    lerProduto(); 
+    int opcaoADM = 0; 
+    char bufferADM[9]; 
+    while (1) 
+    { 
+        limpar_tela(); 
+        printf("Bem Vindo, %s, %s\n", user[idSessao].nome, user[idSessao].cargo); 
+        printf("\nMenu:\n"); 
+        printf("1. Cadastrar/Alterar Produtos\n"); 
+        printf("2. Efetuar Venda\n"); 
+        printf("3. Relatorio de Vendas\n"); 
+        printf("4. Sair\n"); 
+        printf("5. Remover Produto\n"); 
+        printf("6. Menu de Produtos\n"); 
+        printf("Escolha uma opcao: "); 
+ 
+        if (fgets(bufferADM, sizeof(bufferADM), stdin)) 
+        { 
+            if (sscanf(bufferADM, "%d", &opcaoADM) == 1 && opcaoADM >= 1 && opcaoADM <= 6) 
+            { 
+                switch (opcaoADM) 
+                { 
+                case 1: 
+                    limpar_tela(); 
+ 
+                    cadastrarProduto(); 
+ 
+                    break; 
+                /*case 2: //AQUI SERA FEITA A CHAMADA FUNÇÃO QUE IRA EFETUAR UMA VENDA 
+                    // limpabuffer(); 
+                    printf("\tEfetuar Venda\n"); 
+                    cadastrarVenda(); 
+                    break; 
+                case 3: // AQUI SERA FEITA A CHAMADA DA FUNÇÃO QUE IRA IMPRIMIR O RELATORIO DE 
+VENDAS GERAL 
+                    relatorioVendas(); 
+                    getch(); 
+                    break;*/ 
+                case 4: 
+                    printf("Saindo..."); 
+                    // getch(); 
+                    limpar_tela(); 
+                    return 0; 
+                    break; 
+                case 5: 
+                    limpar_tela(); 
+                    menuProdutos(); 
+                    excluirProduto(); 
+                    break; 
+                case 6: 
+                    limpar_tela(); 
+                    menuProdutos(); 
+                    getch(); 
+                    break; 
+                } 
+            } 
+            else 
+            { 
+                limpar_tela(); 
+                printf("Opcao invalida. Tente novamente.\n"); 
+            } 
+        } 
+        else 
+        { 
+            limpar_tela(); 
+            printf("Erro ao ler a entrada. Tente novamente.\n"); 
+        } 
+    } 
+} 
+ 
+int menuCAIXA()//#SPRINT 2, mostra o menu do caixa 
+{ 
+    int opcaoCAIXA = 0; 
+    char bufferCAIXA[9]; 
+    while (1) 
+    { 
+        limpar_tela(); 
+        printf("Bem Vindo, %s, %s\n", user[idSessao].nome, user[idSessao].cargo); 
+        printf("\nMenu:\n"); 
+        printf("1. Efetuar Venda\n"); 
+        printf("2. Consultar Precos\n"); 
+        printf("3. Relatorio de vendas\n"); 
+        printf("4. Sair\n"); 
+        printf("Escolha uma opcao: "); 
+ 
+        if (fgets(bufferCAIXA, sizeof(bufferCAIXA), stdin)) 
+        { 
+            if (sscanf(bufferCAIXA, "%d", &opcaoCAIXA) == 1 && opcaoCAIXA >= 1 && opcaoCAIXA <= 
+4) 
+            { 
+                switch (opcaoCAIXA) 
+                { 
+               /* case 1: //AQUI SERA FEITO A CHAMADA DA FUNÇÃO QUE IRA CADASTRAR UMA VENDA 
+                    printf("Efetuar Venda"); 
+                    cadastrarVenda(); 
+                    getch(); 
+                    break;*/ 
+                case 2: 
+                    printf("\n\tConsultar Precos\n"); 
+                    menuProdutos(); 
+                    getch(); 
+                    break; 
+               /* case 3: //AQUI SERA FEITO A CHAMADA DA FUNÇÃO QUE IRA IMPRIMIR O RELATORIO DE 
+VENDAS DO CAIXA 
+                    printf("\n\t     RELATORIO DE VENDAS\n"); 
+                    relatorioVendasCaixa(); 
+                    getch(); 
+                    break;*/ 
+                case 4: 
+                    printf("Saindo..."); 
+                    getch(); 
+                    limpar_tela(); 
+                    return 0; 
+                    break; 
+                } 
+            } 
+            else 
+            { 
+                limpar_tela(); 
+                printf("Opcao invalida. Tente novamente.\n"); 
+            } 
+        } 
+        else 
+        { 
+            limpar_tela(); 
+            printf("Erro ao ler a entrada. Tente novamente.\n"); 
+        } 
+    } 
+} 
+}
