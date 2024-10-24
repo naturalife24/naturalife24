@@ -73,113 +73,109 @@ void remove_espacos(char *str) // remove espacos de uma string
     }
     *dest = '\0'; // adiciona o caractere nulo no final da nova string
 }
-bool verificastringdigito(const char *string)//#SPRINT 2 FUNÇÃO QUE VERIFICA SE A STRING POSSUI
-NUMEROS
+//PARTE 2 SPRINT 1 - novidades das linhas 89 até 462 (373 linhas), funções verifica, lerProduto, menu e substituir = 114 linhas, cadastrar = 171, excluir = 79.
+bool verificastringdigito(const char *string)//#SPRINT 2 FUNÇÃO QUE VERIFICA SE A STRING POSSUI NUMEROS
 {
- while (*string)
- {
- if (isdigit((unsigned char)*string))
- {
- return true;
- }
- string++;
- }
- return false;
+    while (*string)
+    {
+        if (isdigit((unsigned char)*string))
+        {
+            return true;
+        }
+        string++;
+    }
+    return false;
 }
-void lerProduto()//#SPRINT 2 - responsavel pela leitura do banco de dados produtos.txt e
-atribuição dos produtos ao array de produtos
+void lerProduto()//#SPRINT 2 - responsavel pela leitura do banco de dados produtos.txt e atribuição dos produtos ao array de produtos
 {
- FILE *lerproduto = fopen("produtos.txt", "r");
- if (lerproduto == NULL)
- {
- perror("Erro ao abrir o arquivo");
- return;
+    FILE *lerproduto = fopen("produtos.txt", "r");
+    if (lerproduto == NULL)
+    {
+        perror("Erro ao abrir o arquivo");
+        return;
  }
- char linha[MAX_LINHA];
- idproduto = 0;
- // le a primeira linha do arquivo
- while (fgets(linha, sizeof(linha), lerproduto) != NULL)
- {
- // Remove o caractere de nova linha, se presente
- linha[strcspn(linha, "\n")] = '\0';
- char *parse = strtok(linha, "|");
- produto[idproduto].id = atoi(parse);// atribui o id ao produto lido
- // printf("%i|", produto[idproduto].id);
- if (parse != NULL)
- {
- parse = strtok(NULL, "|");
- strcpy(produto[idproduto].nome, parse);//atribui o nome ao produto lido
- // printf("%s|", produto[idproduto].nome);
- if (parse != NULL)
- {
- parse = strtok(NULL, "|");
- produto[idproduto].preco = (float)atof(parse);//atribui o preço ao produto lido
- // printf("%.2f\n", produto[idproduto].preco);
- // printf("%i|", produto[idproduto].id);
- // printf("%s|", produto[idproduto].nome);
- // printf("%.2f\n", produto[idproduto].preco);
- idproduto++;
- if (idproduto >= MAX_PRODUTO)//se quant de produtos maximos cadastrados
- {
- limpar_tela();
-printf("numero de produtos maximos cadastrados excedidos!");
-break;
- }
- }
- }
- }
- fclose(lerproduto);
+    char linha[MAX_LINHA];
+    idproduto = 0;
+    // le a primeira linha do arquivo
+    while (fgets(linha, sizeof(linha), lerproduto) != NULL)
+    {
+        // Remove o caractere de nova linha, se presente
+        linha[strcspn(linha, "\n")] = '\0';
+        char *parse = strtok(linha, "|");
+        produto[idproduto].id = atoi(parse);// atribui o id ao produto lido
+        // printf("%i|", produto[idproduto].id);
+        if (parse != NULL)
+        {
+            parse = strtok(NULL, "|");
+            strcpy(produto[idproduto].nome, parse);//atribui o nome ao produto lido
+            // printf("%s|", produto[idproduto].nome);
+            if (parse != NULL)
+            {
+                parse = strtok(NULL, "|");
+                produto[idproduto].preco = (float)atof(parse);//atribui o preço ao produto lido
+                // printf("%.2f\n", produto[idproduto].preco);
+                // printf("%i|", produto[idproduto].id);
+                // printf("%s|", produto[idproduto].nome);
+                // printf("%.2f\n", produto[idproduto].preco);
+                idproduto++;
+                if (idproduto >= MAX_PRODUTO)//se quant de produtos maximos cadastrados
+                {
+                    limpar_tela();
+                    printf("numero de produtos maximos cadastrados excedidos!");
+                    break;
+                }
+            }
+        }
+    }
+    fclose(lerproduto);
 }
 void menuProdutos()//#SPRINT 2, Função que imprime na tela todos os produtos para consulta
 {
- // lerProduto();
- printf("\t MENU\n\n");
- for (int i = 0; i < idproduto; i++)//percorre o array produtos a quantidade de produtos
-cadastrados
- {
- printf("\tCOD: %i -- %s -- R$%.2f KG\n\n", produto[i].id, produto[i].nome,
+    // lerProduto();
+    printf("\t MENU\n\n");
+    for (int i = 0; i < idproduto; i++)//percorre o array produtos a quantidade de produtos cadastrados
+    {
+        printf("\tCOD: %i -- %s -- R$%.2f KG\n\n", produto[i].id, produto[i].nome,
 produto[i].preco);//printa o menu na tela
- }
+    }
 }
 void substituirProdutoNoArquivo(int id, structproduto NovoP)//#SPRINT 2
 {
- //essa função exclui o produto da linha passada atraves do id e reescreve em um novo
-arquivo sem o produto que foi excluido.
- FILE *arquivo = fopen("produtos.txt", "r");//arquivo original
- FILE *arquivoTemp = fopen("temp.txt", "w");//arquivo reescrito
- if (arquivo == NULL || arquivoTemp == NULL)
- {
- printf("Erro ao abrir o arquivo.\n");
- return;
- }
- char linha[256];//ate 255 caracteres por linha
- while (fgets(linha, sizeof(linha), arquivo))//lê linha do banco de dados
- {
- int idExistente;
- char nomeExistente[MAX_NOME];
- float precoExistente;
- // Ler os dados da linha atual e atribui às variaveis acima para efeito de comparação
-no proximo bloco
- sscanf(linha, "%d|%[^|]|%f", &idExistente, nomeExistente, &precoExistente);
- // Se id for igual ao produto que desejamos alterar ele ira regravar a linha com os
-novos dados
- if (idExistente == id)
- {
- fprintf(arquivoTemp, "%d|%s|%.2f\n", NovoP.id, NovoP.nome, NovoP.preco);
- }
- else
- {
- // Caso contrario, gravar a linha original
- fprintf(arquivoTemp, "%s", linha);
- }
- }
- fclose(arquivo);
- fclose(arquivoTemp);
- // Substituir o arquivo original pelo arquivo temporario
- remove("produtos.txt");
- rename("temp.txt", "produtos.txt");
- printf("\n\tProduto atualizado com sucesso!\n");
+    //essa função exclui o produto da linha passada atraves do id e reescreve em um novo arquivo sem o produto que foi excluido.
+    FILE *arquivo = fopen("produtos.txt", "r");//arquivo original
+    FILE *arquivoTemp = fopen("temp.txt", "w");//arquivo reescrito
+    if (arquivo == NULL || arquivoTemp == NULL)
+    {
+        printf("Erro ao abrir o arquivo.\n");
+        return;
+    }
+    char linha[256];//ate 255 caracteres por linha
+    while (fgets(linha, sizeof(linha), arquivo))//lê linha do banco de dados
+    {
+        int idExistente;
+        char nomeExistente[MAX_NOME];
+        float precoExistente;
+        // Ler os dados da linha atual e atribui às variaveis acima para efeito de comparação no proximo bloco
+        sscanf(linha, "%d|%[^|]|%f", &idExistente, nomeExistente, &precoExistente);
+        // Se id for igual ao produto que desejamos alterar ele ira regravar a linha com os novos dados
+        if (idExistente == id)
+        {
+            fprintf(arquivoTemp, "%d|%s|%.2f\n", NovoP.id, NovoP.nome, NovoP.preco);
+        }
+        else
+        {
+            // Caso contrario, gravar a linha original
+            fprintf(arquivoTemp, "%s", linha);
+        }
+    }
+    fclose(arquivo);
+    fclose(arquivoTemp);
+    // Substituir o arquivo original pelo arquivo temporario
+    remove("produtos.txt");
+    rename("temp.txt", "produtos.txt");
+    printf("\n\tProduto atualizado com sucesso!\n");
 }
+
 void cadastrarProduto()//#SPRINT 2, realiza o cadastro de produtos no banco de dados
 {
     char entrada[MAX_NOME];//nome do produto a ser cadastrado
