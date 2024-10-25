@@ -1,40 +1,40 @@
 1.  Usuários para administrador e caixa: SPRINT 1.
-1.1.  Declarar bibliotecas, constantes e variáveis; -> Micaías
+1.1.  Declarar bibliotecas, constantes e variáveis; -> Micaías - 18/09
 1.2.	Cadastrar usuários:
-1.2.1.	Criar estrutura de varáveis atribuída a um usuário; -> Micaías
-1.2.2.	Adicionar regras para nome de usuário e senha (nº máximo e mínimo de caracteres, uso de maiúsculas e minúsculas, caracteres especiais); -> Guilherme
-1.2.3.	Se nome de usuário já existente no arquivo, cancelar criação; -> Guilherme
-1.2.4.	Se nome novo, salvar em arquivo. -> Guilherme
+1.2.1.	Criar estrutura de varáveis atribuída a um usuário; -> Micaías - 18/09
+1.2.2.	Adicionar regras para nome de usuário e senha (nº máximo e mínimo de caracteres, uso de maiúsculas e minúsculas, caracteres especiais); -> Guilherme - 20/09
+1.2.3.	Se nome de usuário já existente no arquivo, cancelar criação; -> Guilherme - 21/09
+1.2.4.	Se nome novo, salvar em arquivo. -> Guilherme - 21/09
 1.3.	Autenticar usuários:
-1.3.1.	Se usuário não existente no arquivo, não autenticar; -> Camilly
-1.3.2.	Se senha incorreta no arquivo, não autenticar; -> Camilly
-1.3.3.	Se usuário e senha correspondentes no arquivo, autenticar. -> Camilly
-1.4.	Mostrar menu com opções “Cadastrar usuário”, “Autenticar usuário”, “Limpar menu” e “Sair”. -> João
+1.3.1.	Se usuário não existente no arquivo, não autenticar; -> Camilly - 23/09
+1.3.2.	Se senha incorreta no arquivo, não autenticar; -> Camilly - 23/09
+1.3.3.	Se usuário e senha correspondentes no arquivo, autenticar. -> Camilly - 24/09
+1.4.	Mostrar menu com opções “Cadastrar usuário”, “Autenticar usuário”, “Limpar menu” e “Sair”. -> João - 26/09
 
 2.   Catálogo de produtos: SPRINT 2.
-2.1.  Declarar estrutura atribuída aos produtos; -> Micaías
-2.2.  Ler arquivo com a base de dados dos produtos; -> Guilherme
-2.3.  Mostrar na tela o catálogo completo de produtos já cadastrados; -> Guilherme
+2.1.  Declarar estrutura atribuída aos produtos; -> Micaías - 02/10
+2.2.  Ler arquivo com a base de dados dos produtos; -> Guilherme - 04/10
+2.3.  Mostrar na tela o catálogo completo de produtos já cadastrados; -> Guilherme - 05/10
 2.4.  Cadastrar/alterar produtos: 
-2.4.1.  Adicionar regras para nome dos produtos (ausência de números, nº mínimo de caracteres); -> Camilly
+2.4.1.  Adicionar regras para nome dos produtos (ausência de números, nº mínimo de caracteres); -> Camilly - 07/10
 2.4.2.  Se produto já existente no arquivo: 
-2.4.2.1.  Opção para cancelar cadastro; -> Camilly
-2.4.2.2.  Opção para alterar o preço existente. -> Camilly
-2.4.3.  Se produto novo, salvar em arquivo.
-2.5.  Excluir produto do catálogo; -> Micaías
+2.4.2.1.  Opção para cancelar cadastro; -> Camilly - 08/10
+2.4.2.2.  Opção para alterar o preço existente. -> Camilly - 08/10
+2.4.3.  Se produto novo, salvar em arquivo. > Camilly - 09/10
+2.5.  Excluir produto do catálogo; -> Micaías - 11/10
 2.6.  Diferenciar menus para administrador e caixa:
-2.6.1.  Menu do administrador com opções "Cadastrar/Alterar Produtos", "Remover Produto", "Menu de Produtos" e "Sair"; -> João
-2.6.2.  Menu do caixa por enquanto volta para o menu principal. -> João
+2.6.1.  Menu do administrador com opções "Cadastrar/Alterar Produtos", "Remover Produto", "Menu de Produtos" e "Sair"; -> João - 13/10
+2.6.2.  Menu do caixa por enquanto volta para o menu principal. -> João - 13/10
 
 3. Vendas e cadastro de clientes: SPRINT 3.
-3.1. Declarar estrutura atribuída às vendas; -> Micaías
+3.1. Declarar estrutura atribuída às vendas; -> Micaías - 16/10
 3.2. Cadastrar vendas:
-3.2.1. Diferenciar venda de produto cadastrado ou avulso: -> Guilherme
-3.2.1.1. Se produto cadastrado, calcular preço com valor do banco de dados; -> Guilherme
-3.2.1.1.1. Adicionar forma de pagamento débito, crédito ou dinheiro; -> Camilly
-3.2.1.1.2. Adicionar hora da venda; -> Camilly
-3.2.1.2.1. Adicionar forma de pagamento débito, crédito ou dinheiro; -> João
-3.2.1.2.2. Adicionar hora da venda. -> João
+3.2.1. Diferenciar venda de produto cadastrado ou avulso: -> Guilherme - 18/10
+3.2.1.1. Se produto cadastrado, calcular preço com valor do banco de dados; -> Guilherme - 18/10
+3.2.1.1.1. Adicionar forma de pagamento débito, crédito ou dinheiro; -> Camilly - 20/10
+3.2.1.1.2. Adicionar hora da venda; -> Camilly - 21/10
+3.2.1.2.1. Adicionar forma de pagamento débito, crédito ou dinheiro; -> João - 23/10
+3.2.1.2.2. Adicionar hora da venda. -> João - 23/10
 3.3. Mostrar relatórios de vendas:
-3.3.1. Para o caixa, somente com as vendas do próprio ususário;  -> Micaías
-3.3.2. Para o administrador, com as vendas gerais.  -> Micaías
+3.3.1. Para o caixa, somente com as vendas do próprio ususário;  -> Micaías - 25/10
+3.3.2. Para o administrador, com as vendas gerais.  -> Micaías - 26/10
