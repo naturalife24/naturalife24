@@ -1609,7 +1609,150 @@ void cadastrarVenda() // #SPRINT 3, função responsavel pelas vendas e pelo ban
     }
 }
 
-***
+void relatorioVendasCaixa()
+{
+    limpar_tela();
+    FILE *arquivo = fopen("relatorioVendas.txt", "r");
+    if (arquivo == NULL)
+    {
+        perror("ARQUIVO VAZIO");
+        return;
+    }
+
+    int i = 0;
+    char buffer[200];
+    while (fgets(buffer, sizeof(buffer), arquivo) != NULL)
+    {
+        if (strlen(buffer) > 1)
+        {
+            buffer[strcspn(buffer, "\n")] = '\0';
+
+            // Substitui a vírgula por ponto no preço
+            char *p = strstr(buffer, "R$");
+            if (p != NULL)
+            {
+                char *comma = strchr(p, ',');
+                if (comma != NULL)
+                {
+                    *comma = '.'; // Substitui a vírgula por ponto
+                }
+            }
+
+            int camposLidos = sscanf(buffer, "ID:%i|R$%f|%[^|]|%[^|]|%[^|]|%[^|]|%[^|]|%[^\n]",
+                                     &vendas[i].id,
+                                     &vendas[i].preco,
+                                     vendas[i].produto,
+                                     vendas[i].vendedor,
+                                     vendas[i].pagamento,
+                                     vendas[i].horariovenda,
+                                     clientes[i].nome,
+                                     clientes[i].phone);
+
+            if (camposLidos == 8)
+            {
+                if (strcmp(vendas[i].vendedor, user[idSessao].nome) == 0)
+                {
+                    i++;
+                }
+            }
+            else
+            {
+                fprintf(stderr, "Erro ao ler a linha: %s (campos lidos: %d)\n", buffer, camposLidos);
+            }
+        }
+    }
+
+    fclose(arquivo);
+
+    printf("\tCODIGO  -  VALOR  -  PRODUTO  -  VENDEDOR  -  PAGAMENTO  -  HORARIO | CLIENTE | TELEFONE\n");
+
+    for (int j = 0; j < i; j++)
+    {
+        printf("\n\t    ID %i - R$%.2f - %s - %s - %s - %s | %s | %s\n",
+               vendas[j].id,
+               vendas[j].preco,
+               vendas[j].produto,
+               vendas[j].vendedor,
+               vendas[j].pagamento,
+               vendas[j].horariovenda,
+               clientes[j].nome,
+               clientes[j].phone);
+    }
+}
+
+void relatorioVendas() // SPRINT 3, relatorio de todas as vendas, apenas o adm tem acesso
+{
+    limpar_tela();
+    FILE *arquivo = fopen("relatorioVendas.txt", "r");
+    if (arquivo == NULL)
+    {
+        perror("ARQUIVO VAZIO");
+        return;
+    }
+
+    int i = 0;
+    char buffer[200];
+    while (fgets(buffer, sizeof(buffer), arquivo) != NULL)
+    {
+        // Verifica se a linha não está vazia antes de tentar ler
+        if (strlen(buffer) > 1)
+        {
+            // Remove caracteres indesejados
+            buffer[strcspn(buffer, "\n")] = '\0';
+
+            // Substitui a vírgula por ponto no preço
+            char *p = strstr(buffer, "R$"); // bucando a substring 'R$' dentro da string buffer
+            if (p != NULL)
+            {
+                char *comma = strchr(p, ','); // busca a primeira ocorrencia de um caractere
+                if (comma != NULL)
+                {
+                    *comma = '.'; // Substitui a vírgula por ponto
+                }
+            }
+
+            // Lê os campos da linha
+            int camposLidos = sscanf(buffer, "ID:%i|R$%f|%[^|]|%[^|]|%[^|]|%[^|]|%[^|]|%[^\n]",
+                                     &vendas[i].id,
+                                     &vendas[i].preco,
+                                     vendas[i].produto,
+                                     vendas[i].vendedor,
+                                     vendas[i].pagamento,
+                                     vendas[i].horariovenda,
+                                     clientes[i].nome,
+                                     clientes[i].phone);
+
+            if (camposLidos == 8)
+            {
+                i++;
+            }
+            else
+            { // debbugar eventuais erros de leitura
+                fprintf(stderr, "Erro ao ler a linha: %s (campos lidos: %d)\n", buffer, camposLidos);
+            }
+        }
+    }
+
+    fclose(arquivo);
+
+    printf("\tCODIGO  -  VALOR  -  PRODUTO  -  VENDEDOR  -  PAGAMENTO  -  HORARIO | CLIENTE | TELEFONE\n");
+
+    for (int j = 0; j < i; j++)
+    {
+        // Exibindo o relatório de todas as vendas
+        printf("\n\t    ID %i - R$%.2f - %s - %s - %s - %s | %s | %s\n",
+               vendas[j].id,
+               vendas[j].preco,
+               vendas[j].produto,
+               vendas[j].vendedor,
+               vendas[j].pagamento,
+               vendas[j].horariovenda,
+               clientes[j].nome,
+               clientes[j].phone);
+    }
+}
+
+*****
 
  int obterOpcao() // funcao responsavel por mostrar o menu
  {
