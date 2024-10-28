@@ -418,153 +418,162 @@ void cadastrarProduto() // #SPRINT 2, realiza o cadastro de produtos no banco de
     }
 }
 
-void excluirProduto()//#SP
-return; // Parar a função após alterar o produto
- }
- }
- }
- // Se o produto não existe, solicitar preco e confirmar o cadastro
- limpar_tela();
- printf("\n\tInsira o preco do KG do(a) %s: ", entrada);
- char novopreco[15];
- if (fgets(novopreco, sizeof(novopreco), stdin) != NULL)//le o novo preço em
-string
+void excluirProduto() // #SPRINT 2, função que permite excluir algum produto tanto pelo id quanto pelo nome, ela tambem reescreve o banco de dados após a exclusão para atualizar o id de todos os produtos após a exclusão de um.
 {
- NovoP.preco = strtof(novopreco, NULL); //transforma a string em float e
-atribui na variavel preco do NovoP
- if (NovoP.preco > 0)
-{
- NovoP.id = idproduto + 1; // Atribuir ID do novo produto
- // Mostrar informações para confirmação
-printf("\n\tResumo do produto a ser cadastrado:\n");
- printf("\tNome: %s\n", NovoP.nome);
- printf("\tpreco por kg: R$%.2f\n", NovoP.preco);
- printf("\t1 - Confirma\n\t2 - Cancela\n\tEscolha: ");
- char opcao[10];
-if (fgets(opcao, sizeof(opcao), stdin) != NULL)
-{
- int escolha = atoi(opcao);
-switch (escolha)
-{
-case 1: // Confirmar
- produto[idproduto] = NovoP;
-idproduto++;
- // Escrever o novo produto no banco de dados produtos.txt
- FILE *escreveProduto = fopen("produtos.txt", "a");
-if (escreveProduto != NULL)
-{
- fprintf(escreveProduto, "%i|%s|%.2f\n", NovoP.id,
-NovoP.nome, NovoP.preco);
-fclose(escreveProduto);
-printf("\n\tProduto cadastrado com sucesso\n");
- }
-else
-{
- printf("Erro ao abrir o arquivo de produtos!\n");
- }
-break;
- case 2: // Cancelar
- printf("Cadastro do produto cancelado.\n");
-break;
- default:
- printf("Opção inválida. Cadastro não realizado.\n");
-break;
-}
- }
-else
-{
- printf("Erro ao ler a escolha. Cadastro não realizado.\n");
- }
- }
-else
-{
- printf("preco inválido...\n");
- }
- }
- }
- else
- {
- limpar_tela();
- perror("Invalido");
- getch();
- }
- }
- }
-else
- {
- limpar_tela();
- printf("Erro ao ler a entrada. Tente novamente.\n");
- }
-}
-void lerUsuarios() // funcao que executa a leitura do banco de dados
- {
-     FILE *leitura = fopen("idusersenha.txt", "r");
-     if (leitura == NULL)
-     {
-         perror("Erro ao abrir arquivo");
-         return;
-     }
-     idUsuario = 0;
-     while (fgets(user[idUsuario].nome, MAX_NOME, leitura) != NULL) // le uma linha do arquivo por vez
+
+    printf("\tDigite o ID/NOME do produto que deseja excluir: ");
+    int idProduto;
+    char idStr[MAX_NOME]; // buffer para entrada de dados
+    if (fgets(idStr, sizeof(idStr), stdin) != NULL)
+    {
+        idStr[strcspn(idStr, "\n")] = '\0';
+        remove_espacos(idStr);
+
+        idProduto = atoi(idStr); // Converter a string para número
+
+        int encontrado = -1; // variavel de controle caso o produto exista
+        for (int i = 0; i < idproduto; i++)
         {
-             user[idUsuario].nome[strcspn(user[idUsuario].nome, "\n")] = '\0';
-             char *split = strtok(user[idUsuario].nome, "|"); // uso da funcao strtok() para "destrinchar" a linha lida
-                  user[idUsuario]
-                      .id = atoi(split); // funcao atoi() transforma string em inteiro
-         if (split != NULL)  
-         {
-                 split = strtok(NULL, "|"); // agora split recebe o nome lido
-                 strcpy(user[idUsuario].nome, split); // atribui split para o nome do usuario
-             if (split != NULL)
-             {
-                 split = strtok(NULL, "|"); // aqui split ira ignorar o token atual e ler o proximo
-                 strncpy(user[idUsuario].senha, split, MAX_SENHA - 1);
-                 user[idUsuario].senha[MAX_SENHA - 1] = '\0'; // define o ultimo caractere de .senha como nulo
+            if (produto[i].id == idProduto || strcmp(produto[i].nome, idStr) == 0) // entende tanto o ID como o Nome do produto
+            {
+                encontrado = i;
+                break;
+            }
+        }
+
+        if (encontrado != -1) // se produto for encontrado...
+        {
+            printf("\tProduto %s encontrado. Deseja realmente excluir? (s/n): ", produto[encontrado].nome);
+            char resposta[5]; // buffer
+            if (fgets(resposta, sizeof(resposta), stdin))
+            {
+                resposta[strcspn(resposta, "\n")] = '\0';
+
+                if (strcmp(resposta, "s") == 0 || strcmp(resposta, "S") == 0)
+                {
+                    // Remover o produto do array
+                    for (int i = encontrado; i < idproduto - 1; i++) // le até a quantidade de produtos - 1 tendo em vista que foi excluido 1 produto da lista
+                    {
+                        produto[i] = produto[i + 1]; // atribui o proximo produto ao produto anterior sucessivamente, a partir do produto que foi encontrado, sobreescrevendo ele para que nao haja duplicação ou incongruência nos IDs
+                    }
+                    idproduto--; // Decrementa o total de produtos
+
+                    // Reescrever o arquivo de produtos com IDs atualizados
+                    FILE *arquivo = fopen("produtos.txt", "w");
+                    if (arquivo != NULL)
+                    {
+                        for (int i = 0; i < idproduto; i++)
+                        {
+                            produto[i].id = i + 1; // Atualizar ID de cada produto
+                            fprintf(arquivo, "%i|%s|%.2f\n", produto[i].id, produto[i].nome, produto[i].preco);
+                        }
+                        fclose(arquivo);
+                        printf("\n\tProduto excluído e IDs atualizados com sucesso!\n");
+                    }
+                    else
+                    {
+                        printf("Erro ao abrir o arquivo de produtos.\n");
+                    }
+                }
+                else
+                {
+                    printf("\tOperação de exclusão cancelada.\n");
+                    getch();
+                }
+            }
+            else
+            {
+                printf("\tErro ao ler a resposta. Tente novamente.\n");
+            }
+        }
+        else
+        {
+            printf("\tProduto com ID %d não encontrado!\n", idProduto);
+        }
+    }
+    else
+    {
+        printf("Erro ao ler a entrada.\n");
+    }
+}
+void lerUsuarios() // #SPRINT 1 funcao que executa a leitura do banco de dados
+{
+    FILE *leitura = fopen("idusersenha.txt", "r");
+    if (leitura == NULL)
+    {
+        perror("Erro ao abrir arquivo");
+        return;
+    }
+
+    idUsuario = 0;
+    while (fgets(user[idUsuario].nome, MAX_NOME, leitura) != NULL) // le uma linha do arquivo por vez
+    {
+        user[idUsuario].nome[strcspn(user[idUsuario].nome, "\n")] = '\0';
+        char *split = strtok(user[idUsuario].nome, "|"); // uso da funcao strtok() para "destrinchar" a linha lida
+
+        user[idUsuario].id = atoi(split); // funcao atoi() transforma string em inteiro
+
+        if (split != NULL)
+        {
+            split = strtok(NULL, "|");           // agora split recebe o nome lido
+            strcpy(user[idUsuario].nome, split); // atribui split para o nome do usuario
+
+            if (split != NULL)
+            {
+                split = strtok(NULL, "|"); // aqui split ira ignorar o token atual e ler o proximo
+                strncpy(user[idUsuario].senha, split, MAX_SENHA - 1);
+                user[idUsuario].senha[MAX_SENHA - 1] = '\0'; // define o ultimo caractere de .senha como nulo
 
                 split = strtok(NULL, "|"); // ultimo token
                 strncpy(user[idUsuario].cargo, split, MAX_SENHA - 1);
                 user[idUsuario].cargo[MAX_SENHA - 1] = '\0';
                 idUsuario++; // atribui a quantidade de usuarios cadastrados
+
                 if (idUsuario >= MAX_USUARIOS)
                 {
                     excedido = 1;
                     break;
                 }
-             }
-          }
-       }
-     fclose(leitura);
- }
- int autentica() // funcao que verifica se o nome de usuario ja esta cadastrado
- {
-     lerUsuarios();
-     char confirmaNome[MAX_NOME]; // variavel de usuario
-     char confirmaSenha[MAX_SENHA]; // variavel para comparacao de senha
-     printf("\tDigite o nome de usuario: ");
-     fgets(confirmaNome, MAX_NOME, stdin);
-     confirmaNome[strcspn(confirmaNome, "\n")] = '\0';
-     remove_espacos(confirmaNome);
-     toLowerCase(confirmaNome);
-     printf("\tDigite a senha: ");
-     fgets(confirmaSenha, MAX_SENHA, stdin);
-     confirmaSenha[strcspn(confirmaSenha, "\n")] = '\0';
-     remove_espacos(confirmaSenha);
-     for (int i = 0; i < idUsuario; i++) // percorre todos os usuarios
-     {
-          if (strcmp(confirmaNome, user[i].nome) == 0) // compara nome com usuario
-          {
-              if (strcmp(confirmaSenha, user[i].senha) == 0) // se a senha estiver correta
-              {
-                  limpar_tela();
-                  idSessao = i; // atribui o ID do usuario logado
-                  return 1;
-              }
-          }
-     }
-     limpar_tela();
-     return 0;
+            }
+        }
+    }
+    fclose(leitura);
 }
-void cadastrarUsuario() // funcao responsavel pelo cadastro de usuarios
+
+int autentica() // #SPRINT 1 funcao que verifica se o nome de usuario ja esta cadastrado
+{
+    lerUsuarios();
+    char confirmaNome[MAX_NOME];   // variavel de usuario
+    char confirmaSenha[MAX_SENHA]; // variavel para comparacao de senha
+
+    printf("\tDigite o nome de usuario: ");
+    fgets(confirmaNome, MAX_NOME, stdin);
+    confirmaNome[strcspn(confirmaNome, "\n")] = '\0';
+    remove_espacos(confirmaNome);
+    toLowerCase(confirmaNome);
+
+    printf("\tDigite a senha: ");
+    fgets(confirmaSenha, MAX_SENHA, stdin);
+    confirmaSenha[strcspn(confirmaSenha, "\n")] = '\0';
+    remove_espacos(confirmaSenha);
+
+    for (int i = 0; i < idUsuario; i++) // percorre todos os usuarios
+    {
+        if (strcmp(confirmaNome, user[i].nome) == 0) // compara nome com usuario
+        {
+            if (strcmp(confirmaSenha, user[i].senha) == 0) // se a senha estiver correta
+            {
+                limpar_tela();
+                idSessao = i; // atribui o ID do usuario logado
+                return 1;
+            }
+        }
+    }
+    limpar_tela();
+    return 0;
+}
+
+void cadastrarUsuario() // #SPRINT 1 funcao responsavel pelo cadastro de usuarios
 {
     if (excedido == 1) // se a quantidade maxima de usuarios ja estiver cadastrada
     {
@@ -695,6 +704,95 @@ void cadastrarUsuario() // funcao responsavel pelo cadastro de usuarios
             return;
         }
     }
+}
+
+void cadastrarVenda() // #SPRINT 3, função responsavel pelas vendas e pelo banco de dados das vendas
+{
+    float precokg, valorkg, x;  // variaveis de preços
+    char entrada[100];          // buffer de entrada
+    char pesokg[10];            // buffer de entrada
+    char opcao[10];             // buffer de entrada
+    char nomeproduto[MAX_NOME]; // atribuição do nome
+    char desc[100];             // descrição da venda avulsa
+    int id = -1;                // Inicialmente, nenhum ID
+    int produtoIndex = -1;      // Índice do produto, se encontrado
+    structvendas novavenda;     // um novo array de vendas para atribuir ao array principal
+    structcliente clientes[MAX_LINHA];
+
+    limpar_tela();
+
+    printf("1. Vender produto\n");
+    printf("2. Venda avulsa\n");
+    printf("3. Voltar\n");
+
+    if (fgets(opcao, sizeof(opcao), stdin) != NULL)
+    {
+        int escolha = atoi(opcao);
+        switch (escolha)
+        {
+        case 1: // SPRINT 3 Vende produto
+
+            menuProdutos(); // imprime relação de produtos na tela
+            printf("\n\n\tInforme o id/nome do produto que deseja vender: ");
+            if (fgets(entrada, sizeof(entrada), stdin) != NULL)
+            {
+
+                entrada[strcspn(entrada, "\n")] = '\0';
+                remove_espacos(entrada);
+                toLowerCase(entrada);
+
+                if (strlen(entrada) < 1) // strlen() verifica se o tamanho da string entrada é maior que 1.
+                {
+                    printf("Produto invalido");
+                    return;
+                }
+                limpar_tela();
+
+                id = atoi(entrada); // atoi() transforma valor inserido em inteiro
+
+                if (id > 0 && id <= MAX_VENDAS && produto[id - 1].preco > 0) // Se produto id/nome existe, atribui o id do produto a variavel de controle produtoIndex.
+                {
+                    produtoIndex = id - 1; // Encontrado pelo ID
+                }
+                else
+                {
+
+                    for (int i = 0; i < MAX_VENDAS; i++) // Se não encontrou pelo ID, procura pelo nome
+                    {
+                        if (strcmp(produto[i].nome, entrada) == 0 && produto[i].preco > 0) // strcmp(), compara duas strings sendo 0 TRUE e 1 FALSE
+                        {
+                            produtoIndex = i; // atribui o id encontrado pelo nome
+                            break;
+                        }
+                    }
+                }
+
+                if (produtoIndex >= 0) // Verifica se o id do produto for valido
+                {
+                    strcpy(nomeproduto, produto[produtoIndex].nome); // strcpy(destino, origem)
+                    precokg = produto[produtoIndex].preco;
+
+                    printf("\n\t%s R$%.2f/KG.\n\t\n\tInsira a quantidade de KGs: ", nomeproduto, precokg);
+                    if (fgets(pesokg, sizeof(pesokg), stdin) != NULL)
+                    {
+                        pesokg[strcspn(pesokg, "\n")] = '\0';
+                        valorkg = strtof(pesokg, NULL); // strtof(var, NULL), transforma string em inteiro
+
+                        x = valorkg * precokg; // resultado do peso, valor da venda
+
+                        if (x > 0)
+                        {
+                            //////////
+                            printf("\n\tValor a pagar: R$%.2f\n", x);
+                            printf("\t1 - Confirma\n\t2 - Cancela\n\tEscolha: ");
+
+                            if (fgets(opcao, sizeof(opcao), stdin) != NULL) // lê a escolha do usuário
+                            {
+                                int escolha = atoi(opcao);
+
+****
+
+
  int obterOpcao() // funcao responsavel por mostrar o menu
  {
      int opcao = 0;
