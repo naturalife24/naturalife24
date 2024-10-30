@@ -26,15 +26,16 @@
 2.6.1.  Menu do administrador com opções "Cadastrar/Alterar Produtos", "Remover Produto", "Menu de Produtos" e "Sair"; -> João - 13/10
 2.6.2.  Menu do caixa por enquanto volta para o menu principal. -> João - 13/10
 
-3. Vendas e cadastro de clientes: SPRINT 3.
-3.1. Declarar estrutura atribuída às vendas; -> Micaías - 16/10
-3.2. Cadastrar vendas:
-3.2.1. Diferenciar venda de produto cadastrado ou avulso: -> Guilherme - 18/10
-3.2.1.1. Se produto cadastrado, calcular preço com valor do banco de dados; -> Guilherme - 18/10
-3.2.1.1.1. Adicionar forma de pagamento débito, crédito ou dinheiro; -> Camilly - 20/10
-3.2.1.1.2. Adicionar hora da venda; -> Camilly - 21/10
-3.2.1.2.1. Adicionar forma de pagamento débito, crédito ou dinheiro; -> João - 23/10
-3.2.1.2.2. Adicionar hora da venda. -> João - 23/10
-3.3. Mostrar relatórios de vendas:
-3.3.1. Para o caixa, somente com as vendas do próprio ususário;  -> Micaías - 25/10
-3.3.2. Para o administrador, com as vendas gerais.  -> Micaías - 26/10
+3. 	Vendas e cadastro de clientes: SPRINT 3. 
+3.1. 	Declarar estrutura atribuída às vendas; -> Micaías - 16/10
+3.2. 	Cadastrar vendas: 
+3.2.1. 	Diferenciar venda de produto cadastrado ou avulso: -> Guilherme - 18/10
+3.2.2. 	Se produto cadastrado, calcular preço com valor do banco de dados; -> Guilherme - 18/10 
+3.2.3. 	Adicionar forma de pagamento débito, crédito ou dinheiro; -> Camilly - 20/10
+3.2.4. 	Adicionar hora da venda; -> Camilly - 20/10
+3.2.5. 	Se produto avulso, calcular preço com valor inserido; -> João - 20/10
+3.2.6. 	Adicionar forma de pagamento débito, crédito ou dinheiro; -> João - 20/10
+3.2.7. 	Adicionar hora da venda. -> João - 23/10  
+3.3	Mostrar relatórios de vendas: 
+3.3.1. 	Para o caixa, somente com as vendas do próprio ususário; -> Micaías - 25/10
+3.3.2. 	Para o administrador, com as vendas gerais. -> Micaías - 26/10
